@@ -16,7 +16,8 @@ from session28.date import username, password
 user = username
 password = password
 db="curs"
-engine = create_engine(f"mysql+pymysql://{user}:{password}@localhost:3306/{db}")
+# engine = create_engine(f"mysql+pymysql://{user}:{password}@localhost:3306/{db}")
+engine = create_engine("sqlite:///bounty.db")
 SessionLocal = sessionmaker(bind=engine, expire_on_commit=False)
 
 

@@ -30,7 +30,22 @@ if not task_uri:
 #   - st.container(border=True) cu 4 coloane, cate un st.metric in fiecare
 #   - st.progress cu procentul de task-uri rezolvate
 # --- KPI-uri, grupate intr-un card ---
-...
+nr_total = len(task_uri)
+nr_rezolvate = sum(1 for t in task_uri if t["rezolvat"])
+nr_deschise = nr_total - nr_rezolvate
+procent_rezolvate = nr_rezolvate / nr_total * 100
+
+with st.container(border=True):
+    c1, c2, c3, c4 = st.columns(4)
+    c1.metric("Task-uri", nr_total)
+    c2.metric("Rezolvate", nr_rezolvate)
+    c3.metric("Deschise", nr_deschise)
+    c4.metric("Recompensa disponibila", f"{recompensa['recompensa_totala']:.0f} RON")
+
+    st.progress(
+        procent_rezolvate / 100,
+        text=f"{procent_rezolvate:.0f}% din task-uri rezolvate ({nr_rezolvate}/{nr_total})",
+    )
 
 # --- GRAFICE: task-uri pe limbaj si pe dificultate ---
 # Numaram in Python (nu exista endpoint de GROUP BY). Sortam descrescator.
@@ -59,4 +74,17 @@ with c2:
 #     recompensa, ia primele 5
 #   - st.dataframe cu coloanele Titlu/Limbaj/Dificultate/Recompensa
 # --- TOP task-uri deschise, dupa recompensa ---
-...
+st.subheader("Cele mai valoroase task-uri deschise")
+deschise = [t for t in task_uri if not t["rezolvat"]]
+top_deschise = sorted(deschise, key=lambda t: t["recompensa"], reverse=True)[:5]
+
+if top_deschise:
+    st.dataframe(
+        [{"Titlu": t["titlu"], "Limbaj": t["limbaj"],
+          "Dificultate": t["dificultate"], "Recompensa (RON)": t["recompensa"]}
+         for t in top_deschise],
+        hide_index=True,
+        width="stretch",
+    )
+else:
+    st.success("Toate task-urile sunt rezolvate!")

@@ -11,10 +11,10 @@
 from pandas.core.reshape import tile
 from sqlalchemy import create_engine, String, select
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, sessionmaker
-from session28.date import username, password
+# from session28.date import username, password
 
-user = username
-password = password
+# user = username
+# password = password
 db="curs"
 # engine = create_engine(f"mysql+pymysql://{user}:{password}@localhost:3306/{db}")
 engine = create_engine("sqlite:///bounty.db")

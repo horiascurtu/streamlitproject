@@ -19,9 +19,9 @@ def api(metoda: str, cale: str, **kwargs):
     """Intoarce mereu (ok, date_sau_mesaj). ok=False -> mesajul e un
     string gata de pus direct intr-un st.error(...)."""
     try:
-        r = requests.request(metoda, f"{API_URL}{cale}", timeout=5, **kwargs)
+        r = requests.request(metoda, f"{API_URL}{cale}", timeout=90, **kwargs)
     except requests.exceptions.ConnectionError:
-        return False, "Nu pot contacta API-ul. Ai pornit `python3 s38_app.py` intr-un alt terminal?"
+        return False, f"Nu pot contacta API-ul la {API_URL}"
     except requests.exceptions.Timeout:
         return False, "API-ul a raspuns prea greu (timeout)."
 

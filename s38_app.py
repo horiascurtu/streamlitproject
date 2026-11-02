@@ -112,8 +112,8 @@ def recompensa_disponibila():
 
 # Rulare: python3 s38_app.py (din interiorul session38/) -> /docs
 # Test: POST /task-uri cu recompensa negativa -> 422, inainte sa atinga DB.
-import uvicorn
-uvicorn.run(app, host="127.0.0.1", port=8000)
+# import uvicorn
+# uvicorn.run(app, host="127.0.0.1", port=8000)
 
 
 # =============================================================
